@@ -1,0 +1,237 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "Glass",
+	"patterns": [
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#controlkeywords"
+		},
+		{
+			"include": "#strings"
+		},
+		{
+			"include": "#typesymbols"
+		},
+		{
+			"include": "#numbers"
+		},
+		{
+			"include" : "#singlecharid"
+		},
+		{
+			"include" : "#variables"
+		},
+		{
+			"include" : "#procheaderparts"
+		},
+		
+		{
+			"include" : "#anglebrackets1"
+		},
+		{
+			"include" : "#anglebrackets2"
+		},
+		{
+			"include" : "#comm8"
+		},
+		{
+			"include" : "#comm7"
+		},
+		{
+			"include" : "#comm6"
+		},
+		{
+			"include" : "#comm5"
+		},
+		{
+			"include" : "#comm4"
+		},
+		{
+			"include" : "#comm3"
+		}
+	],
+	"repository": {
+		"anglebrackets" : {
+			"patterns" :[{
+					"name" : "keyword.gl",
+					"match" : "<|>"
+				}]
+		},
+		"anglebrackets1" : {
+			"patterns" :[
+				{
+					"name" : "keyword.control.gl",
+					"match" : "<(?=(\n\r|[^<>\"]|\"[^\"]*\")*>)"
+				},
+				{
+					"name" : "keyword.control.gl",
+					"match" : "(?<=<(\n\r|[^<>\"]|\"[^\"]*\")*)>"
+				},
+				{
+					"name" : "keyword.control.gl",
+					"match" : "<(?=(\n\r|[^<>\"]|\"[^\"]*\")*<(\n\r|[^<>\"]|\"[^\"]*\")*<(\n\r|[^<>\"]|\"[^\"]*\")*>)"
+				},
+				{
+					"name" : "keyword.control.gl",
+					"match" : "(?<=<(\n\r|[^<>\"]|\"[^\"]*\")*>(\n\r|[^<>\"]|\"[^\"]*\")*>(\n\r|[^<>\"]|\"[^\"]*\")*)>"
+				},
+				{
+					"name" : "keyword.control.gl",
+					"match" : "<(?=(\n\r|[^<>\"]|\"[^\"]*\")*<(\n\r|[^<>\"]|\"[^\"]*\")*<(\n\r|[^<>\"]|\"[^\"]*\")*<(\n\r|[^<>\"]|\"[^\"]*\")*<(\n\r|[^<>\"]|\"[^\"]*\")*>)"
+				},
+				{
+					"name" : "keyword.control.gl",
+					"match" : "(?<=<(\n\r|[^<>\"]|\"[^\"]*\")*>(\n\r|[^<>\"]|\"[^\"]*\")*>(\n\r|[^<>\"]|\"[^\"]*\")*>(\n\r|[^<>\"]|\"[^\"]*\")*>(\n\r|[^<>\"]|\"[^\"]*\")*)>"
+				}
+			
+			]
+		},
+		"anglebrackets2" : {
+			"patterns" :[
+				{
+					"name" : "entity.name.function",
+					"match" : "<(?=(\n\r|[^<>\"]|\"[^\"]*\")*<(\n\r|[^<>\"]|\"[^\"]*\")*>)"
+				},
+				{
+					"name" : "entity.name.function",
+					"match" : "(?<=<(\n\r|[^<>\"]|\"[^\"]*\")*>(\n\r|[^<>\"]|\"[^\"]*\")*)>"
+				},
+				{
+					"name" : "entity.name.function",
+					"match" : "<(?=(\n\r|[^<>\"]|\"[^\"]*\")*<(\n\r|[^<>\"]|\"[^\"]*\")*<(\n\r|[^<>\"]|\"[^\"]*\")*<(\n\r|[^<>\"]|\"[^\"]*\")*>)"
+				},
+				{
+					"name" : "entity.name.function",
+					"match" : "(?<=<(\n\r|[^<>\"]|\"[^\"]*\")*>(\n\r|[^<>\"]|\"[^\"]*\")*>(\n\r|[^<>\"]|\"[^\"]*\")*>(\n\r|[^<>\"]|\"[^\"]*\")*)>"
+				}
+			
+			]
+		},
+		
+		"procheaderparts" : {
+			"patterns" :[{
+					"name" : "entity.other.attribute-name",
+					"match" : "\\b([a-z][A-Za-z0-9]*)\\b"
+				}]
+		},
+		"variables" : {
+			"patterns" :[{
+					"name" : "entity.name.type.gl",
+					"match" : "\\b([A-Z][A-Za-z0-9]*)\\b"
+				}]
+		},
+		"numbers" : {
+			"patterns" :[{
+					"name" : "constant.numeric",
+					"match" : "\\b([0-9][0-9.]*)\\b"
+				}]
+		},
+		"typesymbols": {
+			"patterns": [{
+				"name": "entity.name.function",
+				"match": "\\^|\\*|\\?|#|&|:"
+			}]
+		},
+		"singlecharid" : 
+		{
+			"patterns" :[{
+				
+				"name" : "entity.other.attribute-name",
+				"match" : "\\+|\\-|/|%|!|\\||,|;"
+			}]
+		},
+		"controlkeywords": {
+			"patterns": [{
+				"name": "keyword.control.gl",
+				"match": "\\b(if|elif|foreach|output|outputs|try|catch|else|'s|no)\\b"
+			}]
+		},
+		"keywords": {
+			"patterns": [{
+				"name": "keyword.gl",
+				"match": "\\b(howto|copy|exempt|before)\\b"
+			}]
+		},
+		"strings": {
+			"name": "string.quoted.double.gl",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.gl",
+					"match": "\\\\."
+				}
+			]
+		},
+		
+		"comm3": {
+			"begin": "'''",
+			"end": "'''",
+			"beginCaptures": {
+			  "0": { "name": "comment.block" }
+			},
+			"endCaptures": {
+			  "0": { "name": "comment.block" }
+			},
+			"name": "comment.block"
+		  },
+		"comm4": {
+			"begin": "''''",
+			"end": "''''",
+			"beginCaptures": {
+			  "0": { "name": "comment.block" }
+			},
+			"endCaptures": {
+			  "0": { "name": "comment.block" }
+			},
+			"name": "comment.block"
+		  },
+		"comm5": {
+			"begin": "'''''",
+			"end": "'''''",
+			"beginCaptures": {
+			  "0": { "name": "comment.block" }
+			},
+			"endCaptures": {
+			  "0": { "name": "comment.block" }
+			},
+			"name": "comment.block"
+		  },
+		"comm6": {
+			"begin": "''''''",
+			"end": "''''''",
+			"beginCaptures": {
+			  "0": { "name": "comment.block" }
+			},
+			"endCaptures": {
+			  "0": { "name": "comment.block" }
+			},
+			"name": "comment.block"
+		  },
+		"comm7": {
+			"begin": "'''''''",
+			"end": "'''''''",
+			"beginCaptures": {
+			  "0": { "name": "comment.block" }
+			},
+			"endCaptures": {
+			  "0": { "name": "comment.block" }
+			},
+			"name": "comment.block"
+		  },
+		"comm8": {
+			"begin": "''''''''",
+			"end": "''''''''",
+			"beginCaptures": {
+			  "0": { "name": "comment.block" }
+			},
+			"endCaptures": {
+			  "0": { "name": "comment.block" }
+			},
+			"name": "comment.block"
+		  }
+	},
+	"scopeName": "source.gl"
+}

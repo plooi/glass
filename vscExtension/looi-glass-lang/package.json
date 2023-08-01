@@ -1,0 +1,25 @@
+{
+  "name": "looi-glass-lang",
+  "displayName": "GlassLang",
+  "description": "Syntax highlighting for glass",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.70.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "gl",
+      "aliases": ["Glass", "gl"],
+      "extensions": [".gl"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "gl",
+      "scopeName": "source.gl",
+      "path": "./syntaxes/gl.tmLanguage.json"
+    }]
+  }
+}

@@ -1,0 +1,340 @@
+Empty == (+++command+table+++ 17 0 0 0)
+True == (+++command+table+++ 27 0 0 0)
+False == (+++command+table+++ 28 0 0 0)
+EndLoop == (+++command+table+++ 35 0 0 0)
+
+
+howto (?A and ?B) outputs ?
+    if A
+        if B
+            output @True
+    output @False
+
+howto (?A or ?B) outputs ?
+    if A
+        output @True
+    if B
+        output @True
+    output @False
+
+howto (not ?A) outputs ?
+    if A 
+        output @False
+    output @True
+
+    
+
+
+
+
+howto (^Str allcaps) outputs ^
+    output (+++command+table+++ 14 Str 0 0)
+howto (^Str lowercase) outputs ^
+    output (+++command+table+++ 15 Str 0 0)
+howto (^Str from #Start to #End) outputs ^
+    output (+++command+table+++ 16 Str Start End)
+
+
+howto (+++command+table+++ #Function *Arg1 *Arg2 *Arg3)
+
+
+howto (print *S) no output
+    (+++command+table+++ 0 S 0 0)
+
+howto (#A + #B)
+    output (+++command+table+++ 1 A B 0)
+howto (#A - #B)
+    output (+++command+table+++ 2 A B 0)
+howto (#A * #B)
+    output (+++command+table+++ 3 A B 0)
+howto (#A / #B)
+    output (+++command+table+++ 4 A B 0)
+
+
+
+howto (*X to text) outputs ^
+    if (((X istype "text") or (X istype "number")) or (X istype "boolean"))
+        output (+++command+table+++ 31 X 0 0)
+    elif (X istype "list")
+        '''Ret = "["'''
+        (error "not implemented yet")
+
+
+howto(*A join *B) outputs *
+    if ((A istype "text") and (B istype "text"))
+        output (+++command+table+++ 1 A B 0)
+    elif ((A istype "list") and (B istype "list"))
+        output (+++command+table+++ 33 A B 0)
+    elif ((A istype "object") and (B istype "object"))
+        output (+++command+table+++ 34 A B 0)
+    else
+        (error ((("Cannot join a " join (typeof A)) join " with a " ) join (typeof B)) )
+
+
+howto (new exception) outputs :
+    output (+++command+table+++ 6 0 0 0)
+
+exempt howto (new exception ^Msg) outputs :
+    Ret = (new exception)
+    Ret's message = Msg
+    output Ret
+
+howto {raise *Exception} no output
+    (+++command+table+++ 7 Exception 0 0)
+
+exempt howto (error ^Msg) no output
+    Exc = (new exception Msg)
+    {raise Exc}
+
+    
+
+
+
+
+howto {add *Item to &List} no output
+    (+++command+table+++ 11 List Item 0)
+
+howto {set &List at #Position to *Value} no output
+    (+++command+table+++ 10 List Position Value)
+
+howto (&List item #N) outputs *
+    output (+++command+table+++ 9 List N 0)
+
+
+
+    
+
+
+
+
+
+howto (list) outputs &
+    Ret = (+++command+table+++ 8 0 0 0)
+    output Ret
+
+exempt howto (*A) outputs &
+    Ret = (+++command+table+++ 8 0 0 0)
+    {add A to Ret}
+    output Ret
+exempt howto (*A *B) outputs &
+    Ret = (+++command+table+++ 8 0 0 0)
+    {add A to Ret}
+    {add B to Ret}
+    output Ret
+exempt howto (*A *B *C) outputs &
+    Ret = (+++command+table+++ 8 0 0 0)
+    {add A to Ret}
+    {add B to Ret}
+    {add C to Ret}
+    output Ret
+exempt howto (*A *B *C *D) outputs &
+    Ret = (+++command+table+++ 8 0 0 0)
+    {add A to Ret}
+    {add B to Ret}
+    {add C to Ret}
+    {add D to Ret}
+    output Ret
+
+exempt howto (*A *B *C *D *E) outputs &
+    Ret = (+++command+table+++ 8 0 0 0)
+    {add A to Ret}
+    {add B to Ret}
+    {add C to Ret}
+    {add D to Ret}
+    {add E to Ret}
+    output Ret
+exempt howto (*A *B *C *D *E *F) outputs &
+    Ret = (+++command+table+++ 8 0 0 0)
+    {add A to Ret}
+    {add B to Ret}
+    {add C to Ret}
+    {add D to Ret}
+    {add E to Ret}
+    {add F to Ret}
+    output Ret
+exempt howto (*A *B *C *D *E *F *G) outputs &
+    Ret = (+++command+table+++ 8 0 0 0)
+    {add A to Ret}
+    {add B to Ret}
+    {add C to Ret}
+    {add D to Ret}
+    {add E to Ret}
+    {add F to Ret}
+    {add G to Ret}
+    output Ret
+exempt howto (*A *B *C *D *E *F *G *H) outputs &
+    Ret = (+++command+table+++ 8 0 0 0)
+    {add A to Ret}
+    {add B to Ret}
+    {add C to Ret}
+    {add D to Ret}
+    {add E to Ret}
+    {add F to Ret}
+    {add G to Ret}
+    {add H to Ret}
+    output Ret
+
+howto (*Obj has *X) outputs ?
+    if (+++command+table+++ 23 Obj 0 0)
+        output (+++command+table+++ 36 X Obj 0)
+    elif ((+++command+table+++ 24 Obj 0 0) or (+++command+table+++ 25 Obj 0 0))
+        output (+++command+table+++ 26 X Obj 0)
+    else
+        (error ("(*Obj has *X) cannot be used for type " join (typeof Obj)) )
+
+
+
+howto (len *X) outputs #
+    if (X istype "list")
+        output (+++command+table+++ 30 X 0 0)
+    elif (X istype "object")
+        output (+++command+table+++ 29 X 0 0)
+
+
+
+
+howto {set ^Key of :Dict to *Value} no output
+    (+++command+table+++ 12 Dict (Key allcaps) Value)
+
+howto (get ^Key of :Dict) outputs *
+    output (+++command+table+++ 13 Dict (Key allcaps) 0)
+
+howto (newobject) outputs *
+    output (+++command+table+++ 5 0 0 0)
+
+exempt howto (newobject ^K1 *V1) outputs *
+    Ret = (+++command+table+++ 5 0 0 0)
+    {set K1 of Ret to V1}
+    output Ret
+
+exempt howto (newobject ^K1 *V1, ^K2 *V2) outputs *
+    Ret = (+++command+table+++ 5 0 0 0)
+    {set K1 of Ret to V1}
+    {set K2 of Ret to V2}
+    output Ret
+
+exempt howto (newobject ^K1 *V1, ^K2 *V2, ^K3 *V3) outputs *
+    Ret = (+++command+table+++ 5 0 0 0)
+    {set K1 of Ret to V1}
+    {set K2 of Ret to V2}
+    {set K3 of Ret to V3}
+    output Ret
+
+exempt howto (newobject ^K1 *V1, ^K2 *V2, ^K3 *V3, ^K4 *V4) outputs *
+    Ret = (+++command+table+++ 5 0 0 0)
+    {set K1 of Ret to V1}
+    {set K2 of Ret to V2}
+    {set K3 of Ret to V3}
+    {set K4 of Ret to V4}
+    output Ret
+
+howto (*A is *B) outputs ?
+    output (+++command+table+++ 20 A B 0)
+
+howto (#A gt #B) outputs ?
+    output (+++command+table+++ 19 A B 0)
+
+howto (#A ge #B) outputs ?
+    output (not (A lt B))
+
+howto (#A le #B) outputs ?
+    output (not (A gt B))
+
+howto (#A lt #B) outputs ?
+    output (+++command+table+++ 19 B A 0)
+
+
+
+
+howto {:Obj set class ^Type} no output
+    if (not (+++command+table+++ 26 ("classes" allcaps) Obj 0))'''if classes not in object'''
+        Obj's classes = (list)
+    '''{set type of obj's classes to @empty}'''
+    {add (Type lowercase) to Obj's Classes}
+
+
+howto (*X is type ^Type) outputs ?
+    Type = (type lowercase)
+    if (+++command+table+++ 21 X 0 0)'''is number'''
+        output (+++command+table+++ 18 Type "number" 0)
+    elif (+++command+table+++ 22 X 0 0)'''is text'''
+        output (+++command+table+++ 18 Type "text" 0)
+    elif (+++command+table+++ 23 X 0 0)'''is list'''
+        output (+++command+table+++ 18 Type "list" 0)
+    elif (+++command+table+++ 32 X 0 0)'''is boolean'''
+        output (+++command+table+++ 18 Type "boolean" 0)
+
+    elif (+++command+table+++ 24 X 0 0)'''is object'''
+        if (+++command+table+++ 18 Type "object" 0)
+            output @True
+        elif (+++command+table+++ 18 Type "dictionary" 0)
+            output @True
+        else
+            if (+++command+table+++ 26 ("classes" allcaps) X 0)
+                output (+++command+table+++ 36 Type X's Classes 0)
+            else
+                
+                output @False
+    elif (+++command+table+++ 25 X 0 0)'''is exception'''
+        if (+++command+table+++ 18 Type "object" 0)
+            output @True
+        elif (+++command+table+++ 18 Type "exception" 0)
+            output @True
+        else
+            if (+++command+table+++ 26 ("classes" allcaps) X 0)
+                output (+++command+table+++ 36 Type X's Classes 0)
+            else
+                output @False
+
+howto (type of *X) outputs ^
+    if (+++command+table+++ 21 X 0 0)'''is number'''
+        output "number"
+    elif (+++command+table+++ 22 X 0 0)'''is text'''
+        output "text"
+    elif (+++command+table+++ 23 X 0 0)'''is list'''
+        output "list"
+    elif (+++command+table+++ 24 X 0 0)'''is object'''
+        if (+++command+table+++ 26 ("classes" allcaps) X 0)
+            output (X's Classes item ((+++command+table+++ 30 X's Classes 0 0) - 1))
+        else
+            output "object"
+    elif (+++command+table+++ 25 X 0 0)'''is exception'''
+        if (+++command+table+++ 26 ("classes" allcaps) x 0)
+            output (X's Classes item ((+++command+table+++ 30 X's Classes 0 0) - 1))
+        else
+            output "exception"
+        
+    elif (+++command+table+++ 32 X 0 0)'''is boolean'''
+        output "boolean"
+        
+
+exempt howto (new iterator) outputs :
+    Ret = (new object)
+    {Ret set class "iterator"}
+    output Ret
+
+
+howto (#Start to #Stop) outputs :
+    output (Start to Stop increment 1)
+exempt howto (#Start to #End increment #step) outputs :
+    Ret = (new iterator)
+    {Ret set class "RangeIterator"}
+    Ret's Start = Start
+    Ret's End = End
+    Ret's step = step
+    Ret's value = (Start - step)
+    output Ret
+
+
+howto {iterate :Iter} outputs *
+    if (Iter is type "RangeIterator")
+        Iter's Value = (Iter's value + Iter's Step)
+        if (Iter's Value ge Iter's End)
+            output @EndLoop
+        else
+            output Iter's Value
+    else
+        (error ("Please implement {iterate :obj} for type '" join ((typeof Iter) join "'. Implementation is currently not specified for this iterator type")))
+
+
+    
